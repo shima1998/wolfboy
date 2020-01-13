@@ -53,5 +53,15 @@ void draw() {
   box(10,30,15);
   popMatrix();
   
+  pushMatrix();
+  translate(-20, -65, 0);
+  box(10,30,15);
+  popMatrix();
+  
+  pushMatrix();
+  translate(20, -65, 0);
+  box(10,30,15);
+  popMatrix();
+  
   popMatrix();
 }
