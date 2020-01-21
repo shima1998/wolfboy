@@ -1,16 +1,36 @@
-PVector locationBoy; //円の中心位置を格納する変数
-PVector velocityBoy; //円の速度を格納する変数
+int NUM = 10;
+
+PVector[] location = new PVector[NUM];
+PVector[] velocity = new PVector[NUM];
+
+
+float i = -1;//上下運動用
 
 void setup() {
   size(500, 500, P3D);
   noFill();
   stroke(0);
-  
-  locationBoy = new PVector(0,0,0);
-  velocityBoy = new PVector(0,0,0);
+
+
+
+  for (int i = 0; i < NUM; i++) { //配列の数だけ繰り返し
+    //位置のベクトルの初期設定
+    location[i] = new PVector(0, 0, 0);
+    //速度のベクトルの初期設定
+    velocity[i] = new PVector(0, 0, 0);
+  }
 }
 
-void move() {
+float move(int i, float velocityX, float velocityY, float velocityZ) {//速度変更の関数
+  velocity[i].x = velocityX;
+  velocity[i].y = velocityY;
+  velocity[i].z = velocityZ;
+  location[i].add(velocity[i]);
+  if (location[i].y > 0 || location[i].y < -5) {
+    velocityY *= -1;
+  }
+
+  return velocityY;
 }
 
 
@@ -100,9 +120,11 @@ void wolfMain() {
 }
 
 void draw() {
-  int i = 0;
+
 
   background(255);
+
+
   float th = mouseX / 60.0; // range 0 to 8.53
   float th2 = mouseY / 60.0;
 
@@ -112,12 +134,13 @@ void draw() {
   line(0, 0, -width, 0, 0, width);
   line(-width, 0, 0, width, 0, 0);
   line(0, height, 0, 0, -height, 0);
-  
+
   pushMatrix();
-  locationBoy.add(velocityBoy);
-  translate(locationBoy.x, locationBoy.y, locationBoy.z);
+  i = move(0, 0, i, 0);
+  translate(location[0].x, location[0].y, location[0].z);
   boy();
   popMatrix();
-  
+  //farmMain();
+
   popMatrix();
 }
