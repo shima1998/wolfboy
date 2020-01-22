@@ -2,9 +2,9 @@ int NUM = 10;
 
 PVector[] location = new PVector[NUM];
 PVector[] velocity = new PVector[NUM];
+//0:少年,1:狼,2:羊,3:村人A
 
-
-float i = -1;//上下運動用
+float upDown = -1;//上下運動用
 
 void setup() {
   size(500, 500, P3D);
@@ -19,18 +19,6 @@ void setup() {
     //速度のベクトルの初期設定
     velocity[i] = new PVector(0, 0, 0);
   }
-}
-
-float move(int i, float velocityX, float velocityY, float velocityZ) {//速度変更の関数
-  velocity[i].x = velocityX;
-  velocity[i].y = velocityY;
-  velocity[i].z = velocityZ;
-  location[i].add(velocity[i]);
-  if (location[i].y > 0 || location[i].y < -5) {
-    velocityY *= -1;
-  }
-
-  return velocityY;
 }
 
 
@@ -136,11 +124,12 @@ void draw() {
   line(0, height, 0, 0, -height, 0);
 
   pushMatrix();
-  i = move(0, 0, i, 0);
+  upDown = move(0, 3, upDown, 3);
   translate(location[0].x, location[0].y, location[0].z);
   boy();
   popMatrix();
-  //farmMain();
+  farmMain();
 
   popMatrix();
+  stroke(0);
 }
